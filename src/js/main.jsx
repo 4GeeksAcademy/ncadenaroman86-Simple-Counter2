@@ -1,20 +1,18 @@
-const App = ({ seconds }) => {
-  const padded = seconds.toString().padStart(6, "0").split("");
+const { useState } = React;
+
+function Counter() {
+  const [count, setCount] = useState(0);
 
   return (
-    <div className="counter">
-      <span>🕒</span>
-      {padded.map((digit, i) => (
-        <div key={i} className="digit">{digit}</div>
-      ))}
+    <div style={{ textAlign: "center", fontFamily: "Arial", marginTop: "50px" }}>
+      <h1>React Counter</h1>
+      <h2>{count}</h2>
+      <button onClick={() => setCount(count + 1)}>➕ Increment</button>
+      <button onClick={() => setCount(count - 1)}>➖ Decrement</button>
+      <button onClick={() => setCount(0)}>🔄 Reset</button>
     </div>
   );
-};
+}
 
-let counter = 0;
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-setInterval(() => {
-  root.render(<App seconds={counter} />);
-  counter++;
-}, 1000);
+root.render(<Counter />);
