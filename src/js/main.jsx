@@ -1,18 +1,28 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, { useEffect, useState } from "react";
 
-//Bootstrap
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap"
+const SecondsCounter = () => {
+  const [seconds, setSeconds] = useState(0);
 
-// index.css'
-import '../styles/index.css'
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((prev) => prev + 1);
+    }, 1000);
 
-// components
-import Home from './components/Home';
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Home/>
-  </React.StrictMode>,
-)
+  const pad = (num) => num.toString().padStart(6, "0").split("");
+
+  return (
+    <div style={{ background: "#000", padding: "20px", display: "flex", fontSize: "3rem", color: "white", fontFamily: "monospace" }}>
+      <span style={{ marginRight: "20px" }}>🕒</span>
+      {pad(seconds).map((digit, i) => (
+        <div key={i} style={{ padding: "10px", margin: "5px", background: "#111", borderRadius: "5px" }}>
+          {digit}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default SecondsCounter;
