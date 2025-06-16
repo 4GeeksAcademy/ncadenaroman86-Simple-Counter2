@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React Counter</title>
+    <title>Auto Counter</title>
   </head>
   <body>
     <div id="root"></div>
@@ -13,7 +13,31 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Load App -->
-    <script type="text/babel" src="app.jsx"></script>
+    <!-- Load the app -->
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+
+      function AutoCounter() {
+        const [count, setCount] = useState(0);
+
+        useEffect(() => {
+          const interval = setInterval(() => {
+            setCount(prev => prev + 1);
+          }, 1000);
+
+          return () => clearInterval(interval); // cleanup
+        }, []);
+
+        return (
+          <div style={{ textAlign: "center", fontFamily: "Arial", marginTop: "50px" }}>
+            <h1>Automatic Counter</h1>
+            <h2>{count} seconds</h2>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<AutoCounter />);
+    </script>
   </body>
 </html>
